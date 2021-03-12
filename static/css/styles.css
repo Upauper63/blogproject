@@ -1,0 +1,9 @@
+@media (max-width: 768px){
+    .masthead{
+        height: 350px;
+    }
+}
+
+header.masthead .page-heading, header.masthead .post-heading, header.masthead .site-heading{
+    padding: 100px 0;
+}

@@ -36,9 +36,25 @@
             </div>
             <hr>
             {% endfor %}
-            <div class="clearfix">
-                <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-            </div>
+            <ul class="pagination float-right">
+                <!-- 前へ -->
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}"><span class="page-link">前へ</span></a></li>
+                {% endif %}
+     
+                {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+                {% else %}
+                <li class="page-item"><a href="?page={{ i }}"><span class="page-link">{{ i }}</span></a></li>
+                {% endif %}
+                {% endfor %}
+     
+                <!-- 次へ -->
+                {% if page_obj.has_next %}
+                <li class="page-item"><a href="?page={{ page_obj.next_page_number }}"><span class="page-link">次へ</span></a></li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </div>
