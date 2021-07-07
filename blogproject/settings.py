@@ -1,10 +1,11 @@
+import django_heroku
 from pathlib import Path
 import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = False
-SECRET_KEY = os.environ.get('SECRET_KEY')
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS')]
+SECRET_KEY = os.environ['SECRET_KEY']
+ALLOWED_HOSTS = ["upauper63-blog.herokuapp.com"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -46,15 +47,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blogproject.wsgi.application'
 
+import dj_database_url
+db_from_env = dj_database_url.config()
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'blogproject',
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': '',
-        'PORT':'',
-    }
+    'default': dj_database_url.config()
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -86,41 +82,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-STATIC_ROOT = '/usr/share/nginx/html/static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'loggers':{
-        'django':{
-            'handlers': ['file'],
-            'level': 'INFO',
-        },
-        'blog':{
-            'handlers': ['file'],
-            'level': 'INFO',
-        },
-    },
-    'handlers':{
-        'file':{
-            'level': 'INFO',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/django.log'),
-            'formatter': 'production',
-            'when': 'D',
-            'interval': 1,
-            'backupCount': 7,
-        },
-    },
-    'formatters':{
-        'production':{
-            'format': '\t'.join([
-                "[%(levelname)s]",
-                "%(asctime)s",
-                "[%(levelname)s]",
-                "%(pathname)s(LINE:%(lineno)d)",
-                "%(message)s",
-            ])
-        },
-    },
-}
+django_heroku.settings(locals())
