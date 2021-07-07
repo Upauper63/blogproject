@@ -6,7 +6,7 @@ import os
 # from django.conf.urls.static import static
 
 urlpatterns = [
-    path(os.environ.get('ADMIN_URL') + '/', admin.site.urls),
+    path(os.environ['ADMIN_URL'] + '/', admin.site.urls),
     path('', include('blog.urls')),
 ]
 
