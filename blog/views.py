@@ -11,6 +11,3 @@ class Index(ListView):
 class Detail(DetailView):
     template_name = 'detail.html'
     model = Post
-
-def google(request):
-    return render(request, 'googlec27e40927645c779.html')
